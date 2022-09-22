@@ -176,14 +176,11 @@ class _MyAppState extends State<MyApp> {
 ThemeData _buildShrineTheme() {
   final ThemeData base = ThemeData.light();
   return base.copyWith(
-    colorScheme: _shrineColorScheme,
     toggleableActiveColor: shrinePink400,
-    accentColor: shrineBrown900,
     primaryColor: shrinePink100,
     buttonColor: shrinePink100,
     scaffoldBackgroundColor: shrineBackgroundWhite,
     cardColor: shrineBackgroundWhite,
-    textSelectionColor: shrinePink100,
     errorColor: shrineErrorRed,
     buttonTheme: const ButtonThemeData(
       colorScheme: _shrineColorScheme,
@@ -192,8 +189,8 @@ ThemeData _buildShrineTheme() {
     primaryIconTheme: _customIconTheme(base.iconTheme),
     textTheme: _buildShrineTextTheme(base.textTheme),
     primaryTextTheme: _buildShrineTextTheme(base.primaryTextTheme),
-    accentTextTheme: _buildShrineTextTheme(base.accentTextTheme),
     iconTheme: _customIconTheme(base.iconTheme),
+    colorScheme: _shrineColorScheme.copyWith(secondary: shrineBrown900),
   );
 }
 

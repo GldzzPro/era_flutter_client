@@ -1,38 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_login_register_nodejs/pages/home-pages/devices/add.dart';
+import 'package:flutter_login_register_nodejs/pages/home-pages/devices/show.dart';
 
 class People extends StatelessWidget {
   const People({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(24.0),
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      width: size.width,
+      height: size.height,
       child: Column(
-        children: const [
-          SizedBox(
-            height: 40,
-          ),
-          Text(
-            'devices Page',
-            style: TextStyle(
-                fontSize: 40, color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: 100,
-          ),
-          CircleAvatar(
-            radius: 70,
-            child: Icon(
-              Icons.people,
-              size: 120,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const AddDevices(),
+              ));
+            },
+            child: const Text(
+              'add Device  ',
+              style: TextStyle(
+                  fontSize: 40,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
             ),
           ),
-          SizedBox(
-            height: 100,
+          const SizedBox(
+            height: 40,
           ),
-          Text(
-            'Devices Page Content',
-            style: TextStyle(fontSize: 30, color: Colors.white),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const ShowDevices(),
+              ));
+            },
+            child: const Text(
+              'show my Devices  ',
+              style: TextStyle(
+                  fontSize: 30,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
+            ),
           ),
         ],
       ),

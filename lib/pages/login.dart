@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
         MaterialPageRoute(
           builder: (_) => ChangeNotifierProvider(
             create: (context) => HomeProvider(),
-            child: ChatScreen(
+            child: HomeScreen(
               username: _usernameController.text.trim(),
             ),
           ),

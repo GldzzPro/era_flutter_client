@@ -1,4 +1,5 @@
 import 'package:flutter_login_register_nodejs/configs/config.dart';
+import 'package:flutter_login_register_nodejs/pages/home-pages/home/HomePage.dart';
 import 'package:flutter_login_register_nodejs/pages/home-pages/settings/settings.dart';
 import 'package:flutter_login_register_nodejs/pages/home-pages/devices/devices.dart';
 import 'package:flutter_login_register_nodejs/pages/home-pages/profile/profile.dart';
@@ -63,7 +64,7 @@ class _HomeState extends State<Home> {
         widget = const People();
         break;
       case 2:
-        widget = Profile();
+        widget = Container();
         break;
       default:
         widget = const Settings();

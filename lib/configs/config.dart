@@ -12,7 +12,7 @@ class Config {
   static const userProfileAPI = "/api/user/get/";
   // era API
   static const eraAddApi = "/api/era/create";
-  // notes API
+//   // notes API
   static const addNoteAPI = "/api/notes/create";
   static const updateNoteAPI = "/api/notes/update";
   static const deleteNoteAPI = "/api/notes/delete";
@@ -40,3 +40,31 @@ class Config {
     )
   ];
 }
+
+class Constants {
+  static const radius = 35.0;
+  static const padding = 15.0;
+}
+
+
+// // var socket = io("https://neuralnet-server-2.herokuapp.com/", {
+// //     query: { id: "aecazcùzmecùzpeoc,zedc$", eraId: "aeoiazcnpcsoclqscd", type: "client" }
+// // })
+// // var socket = io("https://neuralnet-server-2.herokuapp.com/", {
+// //     query: { id: "aeoiazcnpcsoclqscd", type: "era" }
+// // })
+// // socket.emit("controle request", { message: "test2", eraId: "aeoiazcnpcsoclqscd" });
+// // socket.on("controle request", arg => {
+// //     console.log(arg)
+
+// // });
+
+
+
+//   curl "https://neuralnet-server-2.herokuapp.com/socket.io/?'id=miasandiebayern&,
+//          eraId=parejo&type=client"
+//   curl "https://neuralnet-server-2.herokuapp.com/socket.io/?id='miasandiebayern'&eraId='parejo'&type='client'"
+//  curl "https://neuralnet-server-2.herokuapp.com/?'id=miasandiebayern&,
+//          eraId=parejo&type=client"
+//  curl "https://neuralnet-server-2.herokuapp.com/?id='miasandiebayern'&,
+//          eraId='parejo'&type='client'"

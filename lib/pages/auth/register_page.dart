@@ -6,6 +6,7 @@ import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 
+import '../../configs/app_colors.dart';
 import '../../configs/config.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -37,9 +38,13 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
+        appBar: AppBar(
+          centerTitle: true,
+        ),
+        backgroundColor: AppColors.scaffoldBackground,
         body: ProgressHUD(
           child: Form(
             key: globalFormKey,
@@ -55,24 +60,30 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _registerUI(BuildContext context) {
     Color color = Theme.of(context).backgroundColor;
+    Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          const SizedBox(
+            height: 50,
+          ),
           Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 5.2,
+            height: MediaQuery.of(context).size.height / 4.2,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  color,
-                  color,
+                  AppColors.scaffoldBackground,
+                  AppColors.scaffoldBackground,
                 ],
               ),
-              borderRadius: const BorderRadius.only(
+              borderRadius: BorderRadius.only(
+                //topLeft: Radius.circular(100),
+                //topRight: Radius.circular(150),
                 bottomRight: Radius.circular(100),
                 bottomLeft: Radius.circular(100),
               ),
@@ -102,203 +113,257 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: FormHelper.inputFieldWidget(
-              context,
-              const Icon(Icons.person),
-              "name",
-              "name",
-              (onValidateVal) {
-                if (onValidateVal.isEmpty) {
-                  print(onValidateVal.toString());
-                  return 'name can\'t be empty.';
-                }
-
-                return null;
-              },
-              (onSavedVal) => {
-                name = onSavedVal,
-              },
-              initialValue: "",
-              obscureText: false,
-              borderFocusColor: Colors.white,
-              prefixIconColor: Colors.white,
-              borderColor: Colors.white,
-              textColor: Colors.white,
-              hintColor: Colors.white.withOpacity(0.7),
-              borderRadius: 10,
+          Stack(children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20, bottom: 15),
+              width: size.width * 0.9,
+              height: size.height * 0.09,
+              decoration: BoxDecoration(
+                  color: AppColors.containerBackground,
+                  borderRadius: BorderRadius.circular(25)),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: FormHelper.inputFieldWidget(
-              context,
-              const Icon(Icons.person),
-              "lastName",
-              "lastName",
-              (onValidateVal) {
-                if (onValidateVal.isEmpty) {
-                  print(onValidateVal.toString());
-                  return 'lastName can\'t be empty.';
-                }
-
-                return null;
-              },
-              (onSavedVal) => {
-                lastName = onSavedVal,
-              },
-              initialValue: "",
-              obscureText: false,
-              borderFocusColor: Colors.white,
-              prefixIconColor: Colors.white,
-              borderColor: Colors.white,
-              textColor: Colors.white,
-              hintColor: Colors.white.withOpacity(0.7),
-              borderRadius: 10,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: FormHelper.inputFieldWidget(
-              context,
-              const Icon(Icons.mail),
-              "Email",
-              "Email",
-              (onValidateVal) {
-                if (onValidateVal.isEmpty) {
-                  return 'Email can\'t be empty.';
-                }
-
-                return null;
-              },
-              (onSavedVal) => {
-                email = onSavedVal,
-              },
-              initialValue: "",
-              borderFocusColor: Colors.white,
-              prefixIconColor: Colors.white,
-              borderColor: Colors.white,
-              textColor: Colors.white,
-              hintColor: Colors.white.withOpacity(0.7),
-              borderRadius: 10,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: FormHelper.inputFieldWidget(
-              context,
-              const Icon(Icons.calendar_month),
-              "age",
-              "age",
-              (onValidateVal) {
-                if (onValidateVal.isEmpty) {
-                  print(onValidateVal.toString());
-                  return 'age can\'t be empty.';
-                } else {
-                  if (!isNumeric(age!)) {
-                    return 'age must be a number.';
+            Container(
+              child: FormHelper.inputFieldWidget(
+                context,
+                const Icon(Icons.person),
+                "name",
+                "name",
+                (onValidateVal) {
+                  if (onValidateVal.isEmpty) {
+                    print(onValidateVal.toString());
+                    return 'name can\'t be empty.';
                   }
-                }
 
-                return null;
-              },
-              (onSavedVal) => {
-                age = onSavedVal,
-              },
-              onChange: (text) {
-                print(text);
-                age = text;
-              },
-              initialValue: "",
-              obscureText: false,
-              borderFocusColor: Colors.white,
-              prefixIconColor: Colors.white,
-              borderColor: Colors.white,
-              textColor: Colors.white,
-              hintColor: Colors.white.withOpacity(0.7),
-              borderRadius: 10,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: FormHelper.inputFieldWidget(
-              context,
-              const Icon(Icons.phone),
-              "phone",
-              "phone",
-              (onValidateVal) {
-                if (onValidateVal.isEmpty) {
-                  print(onValidateVal.toString());
-                  return 'phone can\'t be empty.';
-                } else {
-                  if (!isNumeric(phone!)) {
-                    return 'phone must be a number.';
-                  }
-                }
-
-                return null;
-              },
-              (onSavedVal) => {
-                phone = onSavedVal,
-              },
-              onChange: (text) {
-                print(text);
-                phone = text;
-              },
-              initialValue: "",
-              obscureText: false,
-              borderFocusColor: Colors.white,
-              prefixIconColor: Colors.white,
-              borderColor: Colors.white,
-              textColor: Colors.white,
-              hintColor: Colors.white.withOpacity(0.7),
-              borderRadius: 10,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: FormHelper.inputFieldWidget(
-              context,
-              const Icon(Icons.lock),
-              "Password",
-              "Password",
-              (onValidateVal) {
-                if (onValidateVal.isEmpty) {
-                  print(onValidateVal.toString());
-                  return 'password can\'t be empty.';
-                }
-
-                return null;
-              },
-              (onSavedVal) => {
-                password = onSavedVal,
-              },
-              onChange: (text) {
-                print(text);
-                password = text;
-              },
-              initialValue: "",
-              obscureText: hidePassword,
-              borderFocusColor: Colors.white,
-              prefixIconColor: Colors.white,
-              borderColor: Colors.white,
-              textColor: Colors.white,
-              hintColor: Colors.white.withOpacity(0.7),
-              borderRadius: 10,
-              suffixIcon: IconButton(
-                onPressed: () {
-                  setState(() {
-                    hidePassword = !hidePassword;
-                  });
+                  return null;
                 },
-                color: Colors.white.withOpacity(0.7),
-                icon: Icon(
-                  hidePassword ? Icons.visibility_off : Icons.visibility,
+                (onSavedVal) => {
+                  name = onSavedVal,
+                },
+                initialValue: "",
+                obscureText: false,
+                borderFocusColor: Colors.transparent,
+                prefixIconColor: Colors.white,
+                borderColor: Colors.transparent,
+                textColor: Colors.white,
+                hintColor: Colors.white.withOpacity(0.7),
+                borderRadius: 10,
+              ),
+            ),
+          ]),
+          Stack(children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20, bottom: 15),
+              width: size.width * 0.9,
+              height: size.height * 0.09,
+              decoration: BoxDecoration(
+                  color: AppColors.containerBackground,
+                  borderRadius: BorderRadius.circular(25)),
+            ),
+            Container(
+              child: FormHelper.inputFieldWidget(
+                context,
+                const Icon(Icons.person),
+                "lastName",
+                "lastName",
+                (onValidateVal) {
+                  if (onValidateVal.isEmpty) {
+                    print(onValidateVal.toString());
+                    return 'lastName can\'t be empty.';
+                  }
+
+                  return null;
+                },
+                (onSavedVal) => {
+                  lastName = onSavedVal,
+                },
+                initialValue: "",
+                obscureText: false,
+                borderFocusColor: Colors.transparent,
+                prefixIconColor: Colors.white,
+                borderColor: Colors.transparent,
+                textColor: Colors.white,
+                hintColor: Colors.white.withOpacity(0.7),
+                borderRadius: 10,
+              ),
+            ),
+          ]),
+          Stack(children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20, bottom: 15),
+              width: size.width * 0.9,
+              height: size.height * 0.09,
+              decoration: BoxDecoration(
+                  color: AppColors.containerBackground,
+                  borderRadius: BorderRadius.circular(25)),
+            ),
+            Container(
+              child: FormHelper.inputFieldWidget(
+                context,
+                const Icon(Icons.mail),
+                "Email",
+                "Email",
+                (onValidateVal) {
+                  if (onValidateVal.isEmpty) {
+                    return 'Email can\'t be empty.';
+                  }
+
+                  return null;
+                },
+                (onSavedVal) => {
+                  email = onSavedVal,
+                },
+                initialValue: "",
+                borderFocusColor: Colors.transparent,
+                prefixIconColor: Colors.white,
+                borderColor: Colors.transparent,
+                textColor: Colors.white,
+                hintColor: Colors.white.withOpacity(0.7),
+                borderRadius: 10,
+              ),
+            ),
+          ]),
+          Stack(children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20, bottom: 15),
+              width: size.width * 0.9,
+              height: size.height * 0.09,
+              decoration: BoxDecoration(
+                  color: AppColors.containerBackground,
+                  borderRadius: BorderRadius.circular(25)),
+            ),
+            Container(
+              child: FormHelper.inputFieldWidget(
+                context,
+                const Icon(Icons.calendar_month),
+                "age",
+                "age",
+                (onValidateVal) {
+                  if (onValidateVal.isEmpty) {
+                    print(onValidateVal.toString());
+                    return 'age can\'t be empty.';
+                  } else {
+                    if (!isNumeric(age!)) {
+                      return 'age must be a number.';
+                    }
+                  }
+
+                  return null;
+                },
+                (onSavedVal) => {
+                  age = onSavedVal,
+                },
+                onChange: (text) {
+                  print(text);
+                  age = text;
+                },
+                initialValue: "",
+                obscureText: false,
+                borderFocusColor: Colors.transparent,
+                prefixIconColor: Colors.white,
+                borderColor: Colors.transparent,
+                textColor: Colors.white,
+                hintColor: Colors.white.withOpacity(0.7),
+                borderRadius: 10,
+              ),
+            ),
+          ]),
+          Stack(children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20, bottom: 15),
+              width: size.width * 0.9,
+              height: size.height * 0.09,
+              decoration: BoxDecoration(
+                  color: AppColors.containerBackground,
+                  borderRadius: BorderRadius.circular(25)),
+            ),
+            Container(
+              child: FormHelper.inputFieldWidget(
+                context,
+                const Icon(Icons.phone),
+                "phone",
+                "phone",
+                (onValidateVal) {
+                  if (onValidateVal.isEmpty) {
+                    print(onValidateVal.toString());
+                    return 'phone can\'t be empty.';
+                  } else {
+                    if (!isNumeric(phone!)) {
+                      return 'phone must be a number.';
+                    }
+                  }
+
+                  return null;
+                },
+                (onSavedVal) => {
+                  phone = onSavedVal,
+                },
+                onChange: (text) {
+                  print(text);
+                  phone = text;
+                },
+                initialValue: "",
+                obscureText: false,
+                borderFocusColor: Colors.transparent,
+                prefixIconColor: Colors.white,
+                borderColor: Colors.transparent,
+                textColor: Colors.white,
+                hintColor: Colors.white.withOpacity(0.7),
+                borderRadius: 10,
+              ),
+            ),
+          ]),
+          Stack(children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20, bottom: 15),
+              width: size.width * 0.9,
+              height: size.height * 0.09,
+              decoration: BoxDecoration(
+                  color: AppColors.containerBackground,
+                  borderRadius: BorderRadius.circular(25)),
+            ),
+            Container(
+              child: FormHelper.inputFieldWidget(
+                context,
+                const Icon(Icons.lock),
+                "Password",
+                "Password",
+                (onValidateVal) {
+                  if (onValidateVal.isEmpty) {
+                    print(onValidateVal.toString());
+                    return 'password can\'t be empty.';
+                  }
+
+                  return null;
+                },
+                (onSavedVal) => {
+                  password = onSavedVal,
+                },
+                onChange: (text) {
+                  print(text);
+                  password = text;
+                },
+                initialValue: "",
+                obscureText: hidePassword,
+                borderFocusColor: Colors.transparent,
+                prefixIconColor: Colors.white,
+                borderColor: Colors.transparent,
+                textColor: Colors.white,
+                hintColor: Colors.white.withOpacity(0.7),
+                borderRadius: 10,
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      hidePassword = !hidePassword;
+                    });
+                  },
+                  color: Colors.white.withOpacity(0.7),
+                  icon: Icon(
+                    hidePassword ? Icons.visibility_off : Icons.visibility,
+                  ),
                 ),
               ),
             ),
-          ),
+          ]),
           const SizedBox(
             height: 20,
           ),
@@ -345,8 +410,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   );
                 }
               },
-              btnColor: color,
-              borderColor: Colors.white,
+              btnColor: AppColors.buttonColor,
+              borderColor: Colors.transparent,
               txtColor: Colors.white,
               borderRadius: 10,
             ),

@@ -14,14 +14,8 @@ enum _MenuValues {
 class MyApp extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      onGenerateTitle: (c) => '🤔',
-      darkTheme: ThemeData.dark(),
-      title: '🤔',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Home(),
+    return Scaffold(
+      body: Home(),
     );
   }
 }

@@ -36,9 +36,9 @@ class _AlarmAllViewState extends State<AlarmAllView> {
   AlarmProvider get state => Provider.of(context, listen: false);
 
   List<AnimationConfiguration> buildAnimatedGrid(
-      int i, BuildContext context, List<Notes> notes) {
+      int i, BuildContext context, List<Alarm> alarms) {
     List<AnimationConfiguration> animatedGrid = [];
-    for (int j = 0; j < notes.length; j++) {
+    for (int j = 0; j < alarms.length; j++) {
       animatedGrid.add(
         AnimationConfiguration.staggeredGrid(
             duration: const Duration(milliseconds: 700),
@@ -51,7 +51,7 @@ class _AlarmAllViewState extends State<AlarmAllView> {
                         CurvedBox(
                           children: [
                             Text(
-                              notes[j].title,
+                              "${alarms[j].time.hour} h: ${alarms[j].time.minute}m",
                               style: Theme.of(context)
                                   .textTheme
                                   .titleLarge!
@@ -60,70 +60,23 @@ class _AlarmAllViewState extends State<AlarmAllView> {
                             const SizedBox(
                               height: 8,
                             ),
-                            Text(notes[j].note),
+                            Text(alarms[j].name),
                             const SizedBox(
                               height: 16,
                             ),
-                            DateFooter(date: 'Jan 21', footerText: "important")
+                            DateFooter(
+                                date: '.',
+                                footerText: alarms[j].repeat.toString())
                           ],
                         ),
                         Positioned(
                           top: 0,
                           right: 0,
-                          child: PopupMenuButton<_MenuValues>(
-                            itemBuilder: (BuildContext context) => [
-                              const PopupMenuItem(
-                                child: Text('edit'),
-                                value: _MenuValues.edit,
-                              ),
-                              const PopupMenuItem(
-                                child: Text('remove'),
-                                value: _MenuValues.remove,
-                              ),
-                            ],
-                            onSelected: (value) {
-                              switch (value) {
-                                case _MenuValues.remove:
-                                  APIService.deleteNote(notes[j].id).then(
-                                    (response) {
-                                      if (response.message != null) {
-                                        FormHelper.showSimpleAlertDialog(
-                                          context,
-                                          Config.appName,
-                                          response.message,
-                                          "OK",
-                                          () {
-                                            Navigator.of(context).pop();
-                                            Navigator.of(context)
-                                                .push(MaterialPageRoute(
-                                              builder: (context) =>
-                                                  AlarmAllView(),
-                                            ));
-                                          },
-                                        );
-                                      } else {
-                                        FormHelper.showSimpleAlertDialog(
-                                          context,
-                                          Config.appName,
-                                          response.message,
-                                          "OK",
-                                          () {
-                                            Navigator.of(context).pop();
-                                          },
-                                        );
-                                      }
-                                    },
-                                  );
-                                  break;
-                                default:
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (c) => Edit(
-                                          editable: true,
-                                          title: notes[j].title,
-                                          content: notes[j].note,
-                                          id: notes[j].id)));
-                                  break;
-                              }
+                          child: Switch(
+                            value: alarms[j].active,
+                            activeColor: Color(0xFF6200EE),
+                            onChanged: (bool value) {
+                              alarms[j].cancelTimer();
                             },
                           ),
                         )
@@ -138,14 +91,26 @@ class _AlarmAllViewState extends State<AlarmAllView> {
 
   @override
   Widget build(BuildContext context) {
+    for (int i = 0; i < state.alarms.length; i++) {
+      if (state.alarms[i].active) {
+        state.alarms[i].activateTimer();
+      }
+    }
     print(state.alarms);
+
+    // if (data == null) {
+    //   print("null");
+    // } else {
+    //
+    // }
+
     if (isApiCallProcess == true) {
       APIService.getUserNotes().then(
         (response) {
           setState(() {
             isApiCallProcess = false;
           });
-          print("notes");
+          print("ALARMS");
           print(response.notes);
           widget.notes = response.notes;
 
@@ -197,8 +162,9 @@ class _AlarmAllViewState extends State<AlarmAllView> {
                       itemCount: widget.notes?.length,
                       itemBuilder: (context, i) {
                         return Stack(
-                            children:
-                                buildAnimatedGrid(i, context, widget.notes!));
+                            children: state.alarms.isEmpty
+                                ? []
+                                : buildAnimatedGrid(i, context, state.alarms));
                       }),
                 ),
               ),
